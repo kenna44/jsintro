@@ -95,15 +95,15 @@
 
        console.log("camera-relative position");
        let camVert = {}; 
-       camVert.x = 0; //**** TO DO
-       camVert.y = 0; //**** TO DO
-       camVert.z = 0; //**** TO DO
+       camVert.x = camera.x - vertices[v].x; //**** TO DO
+       camVert.y = camera.y - vertices[v].y; //**** TO DO
+       camVert.z = camera.z - vertices[v].z; //**** TO DO
        console.log( camVert );
 
        console.log("projected position"); 
        let canvasPos = {};
-       canvasPos.u = 0; //**** TO DO  
-       canvasPos.v = 0; //**** TO DO 
+       canvasPos.u = camVert.x / camVert.z; //**** TO DO  
+       canvasPos.v =  camVert.y / camVert.z; //**** TO DO 
        console.log( canvasPos );
 
        console.log("scale and center"); 
@@ -125,7 +125,7 @@
       let e1 = edges[e][0]; //idx
       let u1 = projectedVertices[ e1 ].u; 
       let v1 = canvas.height - projectedVertices[ e1 ].v;  //TO DO- explain why did I do this?
-
+// ANSWER: For both cases, this is done because the top left of our canvas is treated as our origin, but up until now we have treated the bottom left as our origin, so this is to adjust our coordinates to respect our canvas origin. Our u (x) value doesn't change because it was never flipped in our canvas. 
       //second vertex
       let e2 = edges[e][1]; //idx
       let u2 = projectedVertices[ e2 ].u;
@@ -158,29 +158,29 @@
     document.addEventListener("keydown", (event) => {
 
       event.preventDefault();
-       switch (event.key) {
+       switch (event.code) {
         case "ArrowUp":
-          //****TO DO: Change camera z position a go closer
+          camera.z++; //****TO DO: Change camera z position a go closer
           console.log("Up arrow pressed");
           draw();
           break;
         case "ArrowDown":
-          //****TO DO: Change camera z position go further away
+          camera.z--;//****TO DO: Change camera z position go further away
           console.log("Down arrow pressed");
           draw();
           break;
         case "ArrowLeft":
-          //****TO DO: Change camera x position move left
+          camera.x--;//****TO DO: Change camera x position move left
           console.log("Left arrow pressed");
           draw();
           break;
         case "ArrowRight":
-          //****TO DO: Change camera x position move right
+          camera.x++;//****TO DO: Change camera x position move right
           console.log("Right arrow pressed");
           draw();
           break;
         case "KeyR":
-          //****TO DO: reset camera
+          camera = { x: 0, y: 0, z: -10};//****TO DO: reset camera
           console.log("Reset");
           draw();
           break;
